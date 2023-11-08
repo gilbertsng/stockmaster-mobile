@@ -25,7 +25,7 @@ j. Icon : menampilkan ikon dengan warna dan ukuran tertentu
 2. Saya melakukan git init pada direktori stockmaster.
 3. Pada direktori stockmaster, saya menambahkan file baru dengan nama "menu.dart" dan menambahkan kode "import 'package:flutter/material.dart';"
 4. Pada file "menu.dart" setelah mengimport file dari "main.dart" saya menambahkan kode yang berisi class MyHomepage dan class _MyHomePageState.
-5. Pada langkah ke-4 akan memunculkan error pada file "main.dart" karena beberapa fungsi sudah dipindahkan ke "menu.dart". Untuk menghindari error saya menambahkan "import 'package:shopping_list/menu.dart';"
+5. Pada langkah ke-4 akan memunculkan error pada file "main.dart" karena beberapa fungsi sudah dipindahkan ke "menu.dart". Untuk menghindari error saya menambahkan "```import 'package:stockmaster/menu.dart';```"
 6. Untuk membuat tiga tombol sederhana (Lihat Item, Tambah Item, dan Logout), Pada file "main.dart" saya mengubah kode "MyHomePage(title: 'Flutter Demo Home Page')" menjadi "MyHomePage()"
 7. File "menu.dart" saya melakukan modifikasi pada class MyHomePage() dari widget yang memiliki state ke widget yang tidak memilki state dan menghapus fungsi state yang ada pada bagian stateless widget:
 ```dart
