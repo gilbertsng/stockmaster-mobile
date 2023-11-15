@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stockmaster/menu.dart';
+import 'package:stockmaster/screens/menu.dart';
 
 void main() {
   runApp(const MyApp());
