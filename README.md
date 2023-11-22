@@ -285,7 +285,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
           appBar: AppBar(
             title: const Center(
               child: Text(
-                'Form Tambah Produk',
+                'Form Tambah Item',
               ),
             ),
             backgroundColor: Colors.black,
@@ -384,7 +384,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
-                                      title: const Text('Produk berhasil tersimpan'),
+                                      title: const Text('Item berhasil tersimpan'),
                                       content: SingleChildScrollView(
                                         child: Column(
                                           crossAxisAlignment:
@@ -502,5 +502,49 @@ class LeftDrawer extends StatelessWidget {
 ```
 
 - Diakhiri dengan menghubungkan pada halaman utama.
+---
+---
 
- 
+## README Tugas 9: Integrasi Layanan Web Django dengan Aplikasi Flutter
+### 1. Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+Ya, dapat melakukan pengambilan data JSON tanpa membuat model terlebih dahulu (dikenal sebagai deserialization atau parsing JSON), menggunakan library dart:convert. Pengambilan data JSON tanpa model lebih fleksibel dan cepat sedangkan pengambilan data JSON dengan membuat model (biasanya dalam bentuk Dart class) akan membuat kode lebih rapih, mudah dikembangkan dan aman. Sehingga pengambilan data JSON dengan membuat model lebih baik daripada tanpa model.
+
+### 2. Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+CookieRequest merupakan kelas yang digunakan untuk mengirim HTTP requests dengan cookie. Jadi, saat HTTP request dikirim, cookie disertakan dalam request tersebut. Hal ini memungkinkan server untuk mengidentifikasi pengguna yang terautentikasi dan menyimpan informasi tentang sesi pengguna. 
+Kebutuhan instance CookieRequest dalam aplikasi Flutter adalah mengelola cookies, persistensi sesi, konsistensi sesi, dan efisiensi
+
+### 3. Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.
+Mekanisme pengambilan data dari JSON dimulai dari Fetch Data, menggunakan HTTP request untuk mengambil data JSON dari web service, lalu dilanjutkan dengan deserialisasi JSON, yang mengubah data JSON yang diterima menjadi objek Dart (menggunakan model yang sudah dibuat atau dapat menjadi Map atau List secara langsung). Setelah itu penggunaan data, yang telah dikonversi untuk mengisi state atau variabel di dalam aplikasi Flutter, dan yang terakhir adalah menampilkan data, contohnya ListBiew.builder (menampilkan daftar data) dan Text widget (menampilkan detail data)
+
+### 4. Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+a. Input data akun pada flutter, pengguna memasukkan informasi akun (nama pengguna dan kata sandi) pada aplikasi flutter
+b. Pengiriman permintaan autentikasi ke Django, setelah mendapat informasi akun pengguna, flutter mengirim informasi data tersebut ke backend Django (permintaan ini umumnya menggunakan metode HTTP POST dan mengandung data akun)
+c. Proses autentikasi di Django, Backend Django menerima permintaan dan melakukan proses autentikasi (umumnya menggunakan mekanisme JSON Web Token/JWT)
+d. Respons ke flutter, setelah data di proses, Django mengirim respon ke flutter (pada tahap ini dapat mengkonfirmasi keberhasilan atau gagal proses autentikasinya)
+e. Tampilan di flutter, setelah menerima respons dari Django, flutter menampilkan respons tersebut. Jika autentikasi berhasil, pengguna dapat diarahkan ke layar menu atau antarmuka pengguna lainnya dan jika gagal akan menampilkan pesan error
+
+### 5. Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
+- Scaffold, membuat struktur dasar tampilan aplikasi
+- ListView.builder, membuat daftar dinamis
+- TextFormField, mengumpulkan input teks dari pengguna
+- ElevatedButton, tombol aksi (sebagai contoh submit form)
+- FutureBuilder, membangun UI berdasarkann hasil interaksi dengan Future
+
+### 6. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
+Implementasi Pada Aplikasi Django :
+1. startapp dengan nama authentication
+2. menambahkan authentication ke INSTALLED_APPS pada main project settings.py aplikasi Django dan menginstall library yang dibutuhkan
+3. menambahkan lagi corsheaders pada INSTALLED_APPS, lalu menambahkan corsheaders.middleware.CorsMiddleware pada middleware main project settings.py aplikasi Django dan menambah beberapa variabel baru
+4. menambahkan beberapa kode pada views dan urls pada authentication dan menambahkan path baru pada urls main project
+
+Implementasi Pada Aplikasi Flutter :
+1. Melakukan install package, yaitu flutter pub add provider dan flutter pub add pbp_django_auth
+2. Mengubah StatelessWidget untuk membuat objek Provider baru yang akan membagikan instance CookieRequest dengan semua komponen yang ada di aplikasi
+3. Membuat file baru "login.dart" pada folder screens
+4. Mengubah main.dart widget MaterialApp menjadi LoginPage
+5. Mengambil data JSON dari aplikasi Django dan mengubah language dari product jadi dart
+6. Menginstall package http dengan cara flutter pub add http dan menambahkan kode pada file android/app/src/main/AndroidManifest.xml "<uses-permission android:name="android.permission.INTERNET" />", untuk memperbolehkan akses internet pada aplikasi Flutter
+7. Membuat file baru dengan nama list_product.dart pada folder screens
+8. Menambahkan ke file left_drawer.dart dan mengubah fungsi lihat item, mengimport file" yang dibutuhkan
+9. Menghubungkan halaman shoplist_form.dart ke CookieRequest
+10. Menambahkan kode untuk CookieRequest dan untuk logout agar tombolnya berfungsi
